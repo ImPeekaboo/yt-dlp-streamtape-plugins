@@ -6,6 +6,7 @@ from yt_dlp.extractor.common import InfoExtractor
 from yt_dlp.utils import js_to_json, urljoin
 
 
+
 class StreamtapeIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?streamtape.[comt]+/[ev]/(?P<id>[^/?#]+)'
     _TESTS = [{
@@ -29,12 +30,26 @@ class StreamtapeIE(InfoExtractor):
         final_URL=f'{PREFIX}{infix}{token}'
         orig_title=re.match(r'.*<meta name="og:title" content="(.*?)">', html, re.M|re.S).group(1)
 
-        #video,title = get_curl_command(url,webpage)
 
         return {
             'id': video_id,
-            'url': final_URL,
+            'thumbnail': self._og_search_thumbnail(html),
             'title': orig_title,
-            'age_limit': 18,
-            'ext': 'mp4',
+            'formats': [{
+                'url': final_URL + '&stream=1',
+                'ext': 'mp4',
+                'http_headers': {
+                    'accept': '*/*',
+                    'cache-control': 'no-cache',
+                    'pragma': 'no-cache',
+                    'range': 'bytes=0-',
+                    'sec-ch-ua': '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
+                    'sec-ch-ua-mobile': '?0',
+                    'sec-fetch-dest': 'video',
+                    'sec-fetch-mode': 'cors',
+                    'sec-fetch-site': 'cross-site',
+                    'sec-gpc': '1',
+                    'referrer': 'https://streamtape.com/'
+                }
+            }]
         }
