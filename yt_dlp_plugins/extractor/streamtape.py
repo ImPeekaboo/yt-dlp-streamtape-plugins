@@ -24,7 +24,7 @@ class StreamtapeIE(InfoExtractor):
         video_id = self._match_id(url)
         PREFIX='https:/'
 
-        html = self._download_webpage(url, video_id)
+        html = self._download_webpage(url.replace("/e/","/v/"), video_id)
         token = re.match(r".*document.getElementById.*\('norobotlink'\).innerHTML =.*?token=(.*?)'.*?;", html, re.M|re.S).group(1)
         infix=re.match(r'.*<div id="ideoooolink" style="display:none;">(.*?token=).*?<[/]div>', html, re.M|re.S).group(1)
         final_URL=f'{PREFIX}{infix}{token}'
