@@ -8,7 +8,7 @@ from yt_dlp.utils import js_to_json, urljoin
 
 
 class StreamtapeIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?streamtape.[comt]+/[ev]/(?P<id>[^/?#]+)'
+    _VALID_URL = r'https?://(?:www\.)?streamtape.[comtxyz]+/[ev]/(?P<id>[^/?#]+)'
     _TESTS = [{
         'url': 'https://streamtape.to/v/7qDqGjlQe4UA9MR/Soul_Land_03_VOSTFR.mp4',
         'md5': '2bd8790b33d8e445575070774153c19f',
